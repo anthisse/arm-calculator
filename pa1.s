@@ -76,14 +76,29 @@ b print_res
 
 div:
 udiv x1, x5, x6
-b print_res
+# print an error if dividing by zero (x6 = 0)
+cmp x6, #0
+b.eq print_fail
 
 print_res:
 ldr x0, = result_string
 bl printf
+b exit_success
+
+print_fail:
+ldr x0, = divide_by_zero_string
+bl printf
+b exit_failure
 
 # system call (success)
-exit:
+exit_success:
     mov x0, #0
     mov x8, #93
     svc #0
+
+# system call (failure)
+exit_failure:
+    mov x0, #1
+    mov x8, #93
+    svc #0
+
