@@ -42,8 +42,8 @@ bl scanf
 ldr x1, = int1
 ldr x2, = int2
 ldr x3, = sign
-ldr x5, [x1]
-ldr x6, [x2]
+ldrsw x5, [x1]
+ldrsw x6, [x2]
 ldr x7, [x3]
 
 # branch to add if '+' is in x7. ascii + is 43
@@ -58,6 +58,9 @@ b.eq sub
 cmp x7, #42
 b.eq mul
 
+# branch to div if '/' is in x7. ascii / is 47
+cmp x7, #47
+b.eq div
 
 add:
 add x1, x5, x6
@@ -69,6 +72,10 @@ b print_res
 
 mul:
 mul x1, x5, x6
+b print_res
+
+div:
+udiv x1, x5, x6
 b print_res
 
 print_res:
