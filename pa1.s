@@ -62,6 +62,10 @@ b.eq mul
 cmp x7, #47
 b.eq div
 
+ldr x0, = invalid_operand_string
+bl printf
+b exit_failure
+
 add:
 add x1, x5, x6
 b print_res
@@ -78,17 +82,15 @@ div:
 udiv x1, x5, x6
 # print an error if dividing by zero (x6 = 0)
 cmp x6, #0
-b.eq print_fail
+b.ne print_res
+ldr x0, = divide_by_zero_string
+bl printf
+b exit_failure
 
 print_res:
 ldr x0, = result_string
 bl printf
 b exit_success
-
-print_fail:
-ldr x0, = divide_by_zero_string
-bl printf
-b exit_failure
 
 # system call (success)
 exit_success:
