@@ -38,13 +38,21 @@ ldr x2, = int2
 ldr x3, = sign
 bl scanf
 
+# Load registers x5 & x6 with integers and x7 with the ascii sign
 ldr x1, = int1
 ldr x2, = int2
 ldr x3, = sign
 ldr x5, [x1]
 ldr x6, [x2]
-mov x7, sign
+ldr x7, [x3]
 
+# branch to add if '+' is in x7. ascii + is 43
+cmp x7, #43
+b.eq add
+b exit
+
+
+add:
 add x1, x5, x6
 ldr x0, = result_string
 bl printf
