@@ -49,11 +49,29 @@ ldr x7, [x3]
 # branch to add if '+' is in x7. ascii + is 43
 cmp x7, #43
 b.eq add
-b exit
+
+# branch to sub if '-' is in x7. ascii - is 45
+cmp x7, #45
+b.eq sub
+
+# branch to mul if '*' is in x7. ascii * is 42
+cmp x7, #42
+b.eq mul
 
 
 add:
 add x1, x5, x6
+b print_res
+
+sub:
+sub x1, x5, x6
+b print_res
+
+mul:
+mul x1, x5, x6
+b print_res
+
+print_res:
 ldr x0, = result_string
 bl printf
 
