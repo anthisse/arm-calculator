@@ -24,13 +24,6 @@ main:
 ldr x0, = get_input_string
 bl printf
 
-# Make room on the stack for the three operands
-# not sure if this is actually needed
-sub sp, sp, 4
-sub sp, sp, 4
-sub sp, sp, 1
-sub sp, sp, 8
-
 # Load the operands into registers and call scanf
 ldr x0, = inputFormat
 ldr x1, = int1
